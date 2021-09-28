@@ -36,3 +36,82 @@
     transform: rotate(360deg);
   }
 }
+
+.row {
+  display: flex;
+  margin: 5px 10px;
+  padding: 3px;
+}
+
+.spacing {
+  margin: 5px 10px;
+  padding: 3px;
+}
+
+.row:nth-of-type(2n-1) {
+  background: #eee;
+}
+
+.col {
+  width: 14.3%;
+  padding: 0 5px;
+}
+
+.badge {
+  margin-right: 5px;
+  height: 10px;
+  width: 10px;
+  border-radius: 1px;
+  display: inline-block;
+}
+
+.acute-cardiac {
+  background: #bb2222;
+}
+
+.dysrhythmia {
+  background: #f083c6;
+}
+
+.perioperative {
+  background: #339966;
+}
+
+.respiratory {
+  background: #22bbff;
+}
+
+.fluid-con {
+  background: #2255ff;
+}
+
+.cell-reg {
+  background: #910f91;
+}
+
+.infect {
+  background: #dd9900;
+}
+
+.vom {
+  background: #cd5fee;
+}
+
+.poo {
+  background: rgb(99, 58, 12);
+}
+
+.hidden {
+  color: transparent !important;
+}
+
+.brand {
+  color: #888;
+  font-style: italic;
+  margin-top: 3px;
+}
+
+.scroll {
+  max-height: 90vh;
+  overflow: auto;
+}

@@ -66,7 +66,7 @@
 }
 
 .acute-cardiac {
-  background: #bb2222;
+  background: #ff2222;
 }
 
 .dysrhythmia {
@@ -101,8 +101,28 @@
   background: rgb(99, 58, 12);
 }
 
+.glucose {
+  background: #cbf;
+}
+
+.hormone {
+  background: #fd4;
+}
+
+.obesity {
+  background: #900;
+}
+
+.hf {
+  background: #222;
+}
+
 .hidden {
   color: transparent !important;
+}
+
+.gone {
+  display: none;
 }
 
 .brand {

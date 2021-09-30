@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Button, Form, Container, Header } from 'semantic-ui-react'
 import './App.css';
+import Cards from './components/Cards';
 import axios from 'axios';
 
 export default class App extends Component {
@@ -10,7 +11,8 @@ export default class App extends Component {
   
     this.state = {
        results: [],
-       sortType: 'DRUG'
+       sortType: 'DRUG',
+       view: 'TABLE'
     }
   }
 
@@ -26,6 +28,7 @@ export default class App extends Component {
       });
 
       this.setState({
+        ...this.state,
         results: sortedResults,
         sortType: 'DRUG'
       });
@@ -43,6 +46,7 @@ export default class App extends Component {
     });
 
     this.setState({
+      ...this.state,
       results: sortedResults,
       sortType: type
     });
@@ -56,11 +60,22 @@ export default class App extends Component {
     });
   }
 
+  switchView = (viewName) => {
+    this.setState({
+      ...this.state,
+      view: viewName
+    })
+  }
+
   render() {
     return (
       <Container fluid className="container">
         <Header as='h2'>Quick Drug</Header>
-        <Form className="form" onSubmit={this.submitHandler}>
+        <div>
+          <Button color="green" onClick={() => this.switchView('TABLE')}>Table</Button>
+          <Button color="green" onClick={() => this.switchView('CARDS')}>Cards</Button>
+        </div>
+        <Form className={`form ${this.state.view == 'TABLE' ? '' : 'gone'}`} onSubmit={this.submitHandler}>
           <div class="spacing">
             <Form.Field>
               <label>Search Drugs</label>
@@ -79,14 +94,14 @@ export default class App extends Component {
             <div className="badge infect"></div><span>-&nbsp;Anti-infective&nbsp;&nbsp;&nbsp;</span>
             <div className="badge vom"></div><span>-&nbsp;Anti-emetic&nbsp;&nbsp;&nbsp;</span>
             <div className="badge poo"></div><span>-&nbsp;Elimination&nbsp;&nbsp;&nbsp;</span>
+            <div className="badge glucose"></div><span>-&nbsp;Glucose Regulation&nbsp;&nbsp;&nbsp;</span>
+            <div className="badge hormone"></div><span>-&nbsp;Hormones&nbsp;&nbsp;&nbsp;</span>
+            <div className="badge obesity"></div><span>-&nbsp;Obesity&nbsp;&nbsp;&nbsp;</span>
+            <div className="badge hf"></div><span>-&nbsp;Heart Failure&nbsp;&nbsp;&nbsp;</span>
           </div>
           <div className="row">
-            <div className="col" onClick={() => this.sortHandler('DRUG')}>
-              DRUG {this.state.sortType === 'DRUG' ? 'd' : ''}{this.state.sortType === 'BRAND NAME' ? 'b' : ''}
-            </div>
-            <div className="col" onClick={() => this.sortHandler('CLASS')}>
-              CLASS {this.state.sortType === 'CLASS' ? 's' : ''}
-            </div>
+            <div className="col" onClick={() => this.sortHandler('DRUG')}>DRUG</div>
+            <div className="col" onClick={() => this.sortHandler('CLASS')}>CLASS</div>
             <div className="col">MOA</div>
             <div className="col">INDICATIONS</div>
             <div className="col">CONTRAINDICATIONS</div>
@@ -104,6 +119,10 @@ export default class App extends Component {
               let infect = result['SECTIONS FROM CM'].includes('Anti-infective');
               let vom = result['SECTIONS FROM CM'].includes('Anti-emetic');
               let poo = result['SECTIONS FROM CM'].includes('Elimination');
+              let glucose = result['SECTIONS FROM CM'].includes('Glucose Regulation');
+              let hormone = result['SECTIONS FROM CM'].includes('Hormones');
+              let obesity = result['SECTIONS FROM CM'].includes('Obesity');
+              let hf = result['SECTIONS FROM CM'].includes('Heart Failure');
 
               return (
                 <div className={`row row-${index}`} key={index}>
@@ -117,6 +136,10 @@ export default class App extends Component {
                     {infect ? <div className="badge infect"></div>: ''}
                     {vom ? <div className="badge vom"></div>: ''}
                     {poo ? <div className="badge poo"></div>: ''}
+                    {glucose ? <div className="badge glucose"></div>: ''}
+                    {hormone ? <div className="badge hormone"></div>: ''}
+                    {obesity ? <div className="badge obesity"></div>: ''}
+                    {hf ? <div className="badge hf"></div>: ''}
                     {result['DRUG']}
                     <div className="brand">{result['BRAND NAME']}</div>
                   </div>
@@ -131,6 +154,9 @@ export default class App extends Component {
             })}
           </div>
         </Form>
+        <div className={this.state.view == 'CARDS' ? '' : 'gone'}>
+          <Cards results={this.state.results}></Cards>
+        </div>
       </Container>
     )
   }
